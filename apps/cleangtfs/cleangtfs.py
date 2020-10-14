@@ -47,7 +47,7 @@ import os
 import sqlite3
 from sqlite3 import Error
 import appdaemon.plugins.hass.hassapi as hass
-import globals
+#import globals
 
 class Clean_GTFS(hass.Hass):
 
@@ -64,10 +64,14 @@ class Clean_GTFS(hass.Hass):
     def initialize(self):
 
         # get the values from the app.yaml that has the relevant personal settings
-        self.GTFS_DB = globals.get_arg(self.args, "GTFS_DB")
+        #self.GTFS_DB = globals.get_arg(self.args, "GTFS_DB")
+        self.GTFS_DB = self.args["GTFS_DB"]
         self.GTFS_PATH = os.path.join("/config","gtfs", self.GTFS_DB)
-        self.MY_STOPS = globals.get_arg(self.args, "MY_STOPS")
-        self.GTFS_FLAG = globals.get_arg(self.args, "GTFS_FLAG")
+        #self.MY_STOPS = globals.get_arg(self.args, "MY_STOPS")
+        self.MY_STOPS = self.args["MY_STOPS"]
+        #self.GTFS_FLAG = globals.get_arg(self.args, "GTFS_FLAG")
+        self.GTFS_FLAG = self.args["GTFS_FLAG"]
+        
 
         # listen to HA for the flag to see if it is necessary to run this code against a new database
         self.listen_state(self.main, self.GTFS_FLAG, new="on")
